@@ -1,0 +1,25 @@
+
+/run/initialize
+
+/MSC/detector/material G4_Al
+/MSC/field/value 0
+
+/tracking/verbose 0
+
+/MSC/stepping/ntuple false
+
+#/MSC/generator/momentum 1000
+#/analysis/setFileName MSC_mu_1000GeV_Al_histo
+#/run/beamOn 100
+
+#/MSC/generator/momentum 100
+#/analysis/setFileName MSC_mu_0100GeV_Al_histo
+#/run/beamOn 100
+
+#/MSC/generator/momentum 10
+#/analysis/setFileName MSC_mu_0010GeV_Al_histo
+#/run/beamOn 100
+
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Al_histo
+/run/beamOn 1000
