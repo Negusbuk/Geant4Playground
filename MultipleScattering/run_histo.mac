@@ -1,0 +1,43 @@
+
+/run/initialize
+
+/MSC/field/value 0
+
+/tracking/verbose 0
+
+/MSC/stepping/ntuple false
+
+/MSC/detector/material G4_GRAPHITE
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Graphite_histo
+/run/beamOn 10000
+
+/MSC/detector/material G4_Si
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Si_histo
+/run/beamOn 10000
+
+/MSC/detector/material G4_Al
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Al_histo
+/run/beamOn 10000
+
+/MSC/detector/material G4_BRASS
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Brass_histo
+/run/beamOn 10000
+
+/MSC/detector/material G4_PbWO4
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_PbWO4_histo
+/run/beamOn 10000
+
+/MSC/detector/material G4_Pb
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Pb_histo
+/run/beamOn 10000
+
+/MSC/detector/material G4_U
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Uranium_histo
+/run/beamOn 10000

@@ -22,4 +22,4 @@
 
 /MSC/generator/momentum 1
 /analysis/setFileName MSC_mu_0001GeV_PbWO4_histo
-/run/beamOn 1000
+/run/beamOn 10000
