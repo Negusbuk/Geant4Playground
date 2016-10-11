@@ -28,8 +28,8 @@
 /// \file exampleB5.cc
 /// \brief Main program of the analysis/B5 example
 
-#include "MSCDetectorConstruction.hh"
-#include "MSCActionInitialization.hh"
+#include "DetectorConstruction.hh"
+#include "ActionInitialization.hh"
 
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
@@ -71,7 +71,7 @@ int main(int argc,char** argv)
 #endif
 
   // Mandatory user initialization classes
-  MSCDetectorConstruction *detConstruction = new MSCDetectorConstruction;
+  DetectorConstruction *detConstruction = new DetectorConstruction;
   runManager->SetUserInitialization(detConstruction);
 
   G4VModularPhysicsList* physicsList = new FTFP_BERT;
@@ -79,7 +79,7 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(physicsList);
 
   // User action initialization
-  runManager->SetUserInitialization(new MSCActionInitialization(detConstruction));
+  runManager->SetUserInitialization(new ActionInitialization(detConstruction));
 
 #ifdef G4VIS_USE
   // Visualization manager construction

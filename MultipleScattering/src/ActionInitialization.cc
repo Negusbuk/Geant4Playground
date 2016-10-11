@@ -23,55 +23,51 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCPrimaryGeneratorAction.hh 76474 2013-11-11 10:36:34Z gcosmo $
+// $Id: ActionInitialization.cc 68058 2013-03-13 14:47:43Z gcosmo $
 //
-/// \file MSCPrimaryGeneratorAction.hh
-/// \brief Definition of the MSCPrimaryGeneratorAction class
+/// \file ActionInitialization.cc
+/// \brief Implementation of the ActionInitialization class
 
-#ifndef MSCPrimaryGeneratorAction_h
-#define MSCPrimaryGeneratorAction_h 1
-
-#include "G4VUserPrimaryGeneratorAction.hh"
-#include "globals.hh"
-
-class G4ParticleGun;
-class G4GenericMessenger;
-class G4Event;
-class G4ParticleDefinition;
-
-/// Primary generator
-///
-/// A single particle is generated.
-/// User can select 
-/// - the initial momentum and angle
-/// - the momentum and angle spreads
-/// - random selection of a particle type from proton, kaon+, pi+, muon+, e+ 
-
-
-class MSCPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
-{
-public:
-    MSCPrimaryGeneratorAction();
-    virtual ~MSCPrimaryGeneratorAction();
-    
-    virtual void GeneratePrimaries(G4Event*);
-    
-    void SetMomentum(G4double val) { fMomentum = val; }
-    G4double GetMomentum() const { return fMomentum; }
-    
-private:
-    void DefineCommands();
-
-    G4ParticleGun* fParticleGun;
-    G4GenericMessenger* fMessenger;
-    G4ParticleDefinition* fPositron;
-    G4ParticleDefinition* fMuon;
-    G4ParticleDefinition* fPion;
-    G4ParticleDefinition* fKaon;
-    G4ParticleDefinition* fProton;
-    G4double fMomentum;
-};
+#include "ActionInitialization.hh"
+#include "PrimaryGeneratorAction.hh"
+#include "RunAction.hh"
+#include "EventAction.hh"
+#include "SteppingAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#endif
+ActionInitialization::ActionInitialization(const DetectorConstruction* detConstruction)
+ : G4VUserActionInitialization(),
+   fDetConstruction(detConstruction)
+{
+
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+ActionInitialization::~ActionInitialization()
+{
+
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void ActionInitialization::BuildForMaster() const
+{
+  EventAction* eventAction = 0;
+  SetUserAction(new RunAction(eventAction));
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void ActionInitialization::Build() const
+{
+  EventAction* eventAction = new EventAction;
+
+  SetUserAction(new PrimaryGeneratorAction);
+  SetUserAction(new RunAction(eventAction));
+  SetUserAction(eventAction);
+  SetUserAction(new SteppingAction(fDetConstruction));
+}  
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

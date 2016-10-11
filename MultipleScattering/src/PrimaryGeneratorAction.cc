@@ -23,12 +23,12 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCPrimaryGeneratorAction.cc 77781 2013-11-28 07:54:07Z gcosmo $
+// $Id: PrimaryGeneratorAction.cc 77781 2013-11-28 07:54:07Z gcosmo $
 //
-/// \file MSCPrimaryGeneratorAction.cc
-/// \brief Implementation of the MSCPrimaryGeneratorAction class
+/// \file PrimaryGeneratorAction.cc
+/// \brief Implementation of the PrimaryGeneratorAction class
 
-#include "MSCPrimaryGeneratorAction.hh"
+#include "PrimaryGeneratorAction.hh"
 
 #include "G4Event.hh"
 #include "G4ParticleGun.hh"
@@ -40,7 +40,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MSCPrimaryGeneratorAction::MSCPrimaryGeneratorAction()
+PrimaryGeneratorAction::PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction(),     
   fParticleGun(0), fMessenger(0), 
   fPositron(0), fMuon(0), fPion(0), fKaon(0), fProton(0),
@@ -67,7 +67,7 @@ MSCPrimaryGeneratorAction::MSCPrimaryGeneratorAction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MSCPrimaryGeneratorAction::~MSCPrimaryGeneratorAction()
+PrimaryGeneratorAction::~PrimaryGeneratorAction()
 {
   delete fParticleGun;
   delete fMessenger;
@@ -75,7 +75,7 @@ MSCPrimaryGeneratorAction::~MSCPrimaryGeneratorAction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void MSCPrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
+void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 {
   G4ParticleDefinition* particle = fMuon;
   fParticleGun->SetParticleDefinition(particle);
@@ -92,9 +92,9 @@ void MSCPrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void MSCPrimaryGeneratorAction::DefineCommands()
+void PrimaryGeneratorAction::DefineCommands()
 {
-  // Define /MSC/generator command directory using generic messenger class
+  // Define //generator command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
                                       "/MSC/generator/",
                                       "Primary generator control");

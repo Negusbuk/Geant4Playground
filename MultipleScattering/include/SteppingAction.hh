@@ -23,36 +23,43 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCActionInitialization.hh 68058 2013-03-13 14:47:43Z gcosmo $
-//
-/// \file MSCActionInitialization.hh
-/// \brief Definition of the MSCActionInitialization class
+// $Id: SteppingAction.hh 68058 2013-03-13 14:47:43Z gcosmo $
+// 
+/// \file SteppingAction.hh
+/// \brief Definition of the SteppingAction class
 
-#ifndef MSCActionInitialization_h
-#define MSCActionInitialization_h 1
+#ifndef SteppingAction_h
+#define SteppingAction_h 1
 
-#include "G4VUserActionInitialization.hh"
+#include "G4UserSteppingAction.hh"
 
-#include "MSCDetectorConstruction.hh"
+class G4GenericMessenger;
 
-/// Action initialization class.
+class DetectorConstruction;
 
-class MSCActionInitialization : public G4VUserActionInitialization
+/// Stepping action class.
+///
+/// In UserSteppingAction() there are collected the energy deposit and track 
+/// lengths of charged particles in Absober and Gap layers and
+/// updated in EventAction.
+
+class SteppingAction : public G4UserSteppingAction
 {
 public:
-  MSCActionInitialization(const MSCDetectorConstruction* detConstruction);
-  virtual ~MSCActionInitialization();
+  SteppingAction(const DetectorConstruction* detectorConstruction);
+  virtual ~SteppingAction();
 
-  virtual void BuildForMaster() const;
-  virtual void Build() const;
+  virtual void UserSteppingAction(const G4Step* step);
 
-protected:
+private:
 
-  const MSCDetectorConstruction* fDetConstruction;
+    void DefineCommands();
+
+    G4GenericMessenger* fMessenger;
+    bool fFillNTuple;
+    const DetectorConstruction* fDetConstruction;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
-    

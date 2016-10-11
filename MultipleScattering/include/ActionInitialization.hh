@@ -23,15 +23,36 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCAnalysis.hh 66536 2012-12-19 14:32:36Z ihrivnac $
+// $Id: ActionInitialization.hh 68058 2013-03-13 14:47:43Z gcosmo $
 //
-/// \file MSCAnalysis.hh
-/// \brief Selection of the analysis technology
+/// \file ActionInitialization.hh
+/// \brief Definition of the ActionInitialization class
 
-#ifndef MSCAnalysis_h
-#define MSCAnalysis_h 1
+#ifndef ActionInitialization_h
+#define ActionInitialization_h 1
 
-#include "g4root.hh"
-//#include "g4xml.hh"
+#include "G4VUserActionInitialization.hh"
+
+#include "DetectorConstruction.hh"
+
+/// Action initialization class.
+
+class ActionInitialization : public G4VUserActionInitialization
+{
+public:
+  ActionInitialization(const DetectorConstruction* detConstruction);
+  virtual ~ActionInitialization();
+
+  virtual void BuildForMaster() const;
+  virtual void Build() const;
+
+protected:
+
+  const DetectorConstruction* fDetConstruction;
+};
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
+
+    

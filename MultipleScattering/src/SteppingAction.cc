@@ -23,15 +23,15 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCSteppingAction.cc 68058 2013-03-13 14:47:43Z gcosmo $
+// $Id: SteppingAction.cc 68058 2013-03-13 14:47:43Z gcosmo $
 // 
-/// \file MSCSteppingAction.cc
-/// \brief Implementation of the MSCSteppingAction class
+/// \file SteppingAction.cc
+/// \brief Implementation of the SteppingAction class
 
-#include "MSCSteppingAction.hh"
-#include "MSCEventAction.hh"
-#include "MSCDetectorConstruction.hh"
-#include "MSCAnalysis.hh"
+#include "SteppingAction.hh"
+#include "EventAction.hh"
+#include "DetectorConstruction.hh"
+#include "Analysis.hh"
 
 #include "G4Step.hh"
 #include "G4RunManager.hh"
@@ -40,7 +40,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MSCSteppingAction::MSCSteppingAction(const MSCDetectorConstruction* detectorConstruction)
+SteppingAction::SteppingAction(const DetectorConstruction* detectorConstruction)
   : G4UserSteppingAction(),
     fDetConstruction(detectorConstruction)
 {
@@ -49,14 +49,14 @@ MSCSteppingAction::MSCSteppingAction(const MSCDetectorConstruction* detectorCons
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MSCSteppingAction::~MSCSteppingAction()
+SteppingAction::~SteppingAction()
 { 
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void MSCSteppingAction::UserSteppingAction(const G4Step* step)
+void SteppingAction::UserSteppingAction(const G4Step* step)
 {
   //if (step->GetTrack()->GetDefinition()->GetPDGCharge() == 0.) return;
 
@@ -107,9 +107,9 @@ void MSCSteppingAction::UserSteppingAction(const G4Step* step)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void MSCSteppingAction::DefineCommands()
+void SteppingAction::DefineCommands()
 {
-  // Define /MSC/detector command directory using generic messenger class
+  // Define //detector command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
                                       "/MSC/stepping/",
                                       "Stepping control");

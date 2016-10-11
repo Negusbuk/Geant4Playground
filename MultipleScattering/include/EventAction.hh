@@ -23,56 +23,35 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCMagneticField.cc 77656 2013-11-27 08:52:57Z gcosmo $
+// $Id: EventAction.hh 94486 2015-11-19 08:33:37Z gcosmo $
 //
-/// \file MSCMagneticField.cc
-/// \brief Implementation of the MSCMagneticField class
+/// \file EventAction.hh
+/// \brief Definition of the EventAction class
 
-#include "MSCMagneticField.hh"
+#ifndef EventAction_h
+#define EventAction_h 1
 
-#include "G4GenericMessenger.hh"
-#include "G4SystemOfUnits.hh"
+
+#include "G4UserEventAction.hh"
 #include "globals.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+#include <vector>
 
-MSCMagneticField::MSCMagneticField()
-: G4MagneticField(), fMessenger(0), fBy(1.0*tesla)
+/// Event action
+
+class EventAction : public G4UserEventAction
 {
-    // define commands for this class
-    DefineCommands();
-}
+public:
+    EventAction();
+    virtual ~EventAction();
+    
+    virtual void BeginOfEventAction(const G4Event*);
+    virtual void EndOfEventAction(const G4Event*);
+
+private:
+
+};
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MSCMagneticField::~MSCMagneticField()
-{ 
-    delete fMessenger; 
-}
-
-void MSCMagneticField::GetFieldValue(const G4double [4],double *bField) const
-{
-    bField[0] = 0.;
-    bField[1] = fBy;
-    bField[2] = 0.;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void MSCMagneticField::DefineCommands()
-{
-    // Define /MSC/field command directory using generic messenger class
-    fMessenger = new G4GenericMessenger(this, 
-                                        "/MSC/field/",
-                                        "Field control");
-
-    // fieldValue command 
-    G4GenericMessenger::Command& valueCmd
-      = fMessenger->DeclareMethodWithUnit("value","tesla",
-                                  &MSCMagneticField::SetField,
-                                  "Set field strength.");
-    valueCmd.SetParameterName("field", true);
-    valueCmd.SetDefaultValue("1.");
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+#endif

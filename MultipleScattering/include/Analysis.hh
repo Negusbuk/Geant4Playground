@@ -23,37 +23,15 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCRunAction.hh 74204 2013-10-01 07:04:43Z ihrivnac $
-// 
-/// \file MSCRunAction.hh
-/// \brief Definition of the MSCRunAction class
+// $Id: Analysis.hh 66536 2012-12-19 14:32:36Z ihrivnac $
+//
+/// \file Analysis.hh
+/// \brief Selection of the analysis technology
 
-#ifndef MSCRunAction_h
-#define MSCRunAction_h 1
+#ifndef Analysis_h
+#define Analysis_h 1
 
-#include "G4UserRunAction.hh"
-#include "globals.hh"
-
-class MSCEventAction;
-
-class G4Run;
-
-/// Run action class
-
-class MSCRunAction : public G4UserRunAction
-{
-public:
-  MSCRunAction(MSCEventAction* eventAction);
-  virtual ~MSCRunAction();
-
-  virtual void BeginOfRunAction(const G4Run*);
-  virtual void   EndOfRunAction(const G4Run*);
-
-private:
-
-  MSCEventAction* fEventAction;
-};
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+#include "g4root.hh"
+//#include "g4xml.hh"
 
 #endif

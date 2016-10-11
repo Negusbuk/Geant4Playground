@@ -23,74 +23,56 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCDetectorConstruction.hh 76474 2013-11-11 10:36:34Z gcosmo $
+// $Id: MagneticField.cc 77656 2013-11-27 08:52:57Z gcosmo $
 //
-/// \file MSCDetectorConstruction.hh
-/// \brief Definition of the MSCDetectorConstruction class
+/// \file MagneticField.cc
+/// \brief Implementation of the MagneticField class
 
-#ifndef MSCDetectorConstruction_h
-#define MSCDetectorConstruction_h 1
+#include "MagneticField.hh"
 
+#include "G4GenericMessenger.hh"
+#include "G4SystemOfUnits.hh"
 #include "globals.hh"
-#include "G4VUserDetectorConstruction.hh"
-#include "G4RotationMatrix.hh"
-#include "G4FieldManager.hh"
-#include "G4UIcmdWithAString.hh"
-
-#include <vector>
-
-class MSCMagneticField;
-
-class G4VPhysicalVolume;
-class G4Material;
-class G4VSensitiveDetector;
-class G4VisAttributes;
-class G4GenericMessenger;
-
-/// Detector construction
-
-class MSCDetectorConstruction : public G4VUserDetectorConstruction
-{
-public:
-  MSCDetectorConstruction();
-  virtual ~MSCDetectorConstruction();
-
-  virtual G4VPhysicalVolume* Construct();
-  virtual void ConstructSDandField();
-
-  void ListMaterials();
-  void SetAbsorberMaterial(G4String materialChoice);
-
-  G4VPhysicalVolume* GetAbsorberPV() const { return fAbsorberPhysical; }
-
-  void ConstructMaterials();
-
-private:
-
-  void DefineCommands();
-
-  G4GenericMessenger* fMessenger;
-
-  static G4ThreadLocal MSCMagneticField* fMagneticField;
-  static G4ThreadLocal G4FieldManager* fFieldMgr;
-
-  G4LogicalVolume* fAbsorberLogical;
-  G4VPhysicalVolume* fAbsorberPhysical;
-
-  std::vector<G4VisAttributes*> fVisAttributes;
-
-  G4Material* Galactic;
-  G4Material* Air;
-  G4Material* CFRP;
-  G4Material* Si;
-  G4Material* Al;
-  G4Material* Steel;
-  G4Material* Brass;
-  G4Material* PbWO4;
-  G4Material* Pb;
-  G4Material* Uranium;
-};
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#endif
+MagneticField::MagneticField()
+: G4MagneticField(), fMessenger(0), fBy(1.0*tesla)
+{
+    // define commands for this class
+    DefineCommands();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+MagneticField::~MagneticField()
+{ 
+    delete fMessenger; 
+}
+
+void MagneticField::GetFieldValue(const G4double [4],double *bField) const
+{
+    bField[0] = 0.;
+    bField[1] = fBy;
+    bField[2] = 0.;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void MagneticField::DefineCommands()
+{
+    // Define //field command directory using generic messenger class
+    fMessenger = new G4GenericMessenger(this, 
+                                        "/MSC/field/",
+                                        "Field control");
+
+    // fieldValue command 
+    G4GenericMessenger::Command& valueCmd
+      = fMessenger->DeclareMethodWithUnit("value","tesla",
+                                  &MagneticField::SetField,
+                                  "Set field strength.");
+    valueCmd.SetParameterName("field", true);
+    valueCmd.SetDefaultValue("1.");
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

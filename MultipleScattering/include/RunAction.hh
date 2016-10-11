@@ -23,41 +23,35 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCSteppingAction.hh 68058 2013-03-13 14:47:43Z gcosmo $
+// $Id: RunAction.hh 74204 2013-10-01 07:04:43Z ihrivnac $
 // 
-/// \file MSCSteppingAction.hh
-/// \brief Definition of the MSCSteppingAction class
+/// \file RunAction.hh
+/// \brief Definition of the RunAction class
 
-#ifndef MSCSteppingAction_h
-#define MSCSteppingAction_h 1
+#ifndef RunAction_h
+#define RunAction_h 1
 
-#include "G4UserSteppingAction.hh"
+#include "G4UserRunAction.hh"
+#include "globals.hh"
 
-class G4GenericMessenger;
+class EventAction;
 
-class MSCDetectorConstruction;
+class G4Run;
 
-/// Stepping action class.
-///
-/// In UserSteppingAction() there are collected the energy deposit and track 
-/// lengths of charged particles in Absober and Gap layers and
-/// updated in MSCEventAction.
+/// Run action class
 
-class MSCSteppingAction : public G4UserSteppingAction
+class RunAction : public G4UserRunAction
 {
 public:
-  MSCSteppingAction(const MSCDetectorConstruction* detectorConstruction);
-  virtual ~MSCSteppingAction();
+  RunAction(EventAction* eventAction);
+  virtual ~RunAction();
 
-  virtual void UserSteppingAction(const G4Step* step);
+  virtual void BeginOfRunAction(const G4Run*);
+  virtual void   EndOfRunAction(const G4Run*);
 
 private:
 
-    void DefineCommands();
-
-    G4GenericMessenger* fMessenger;
-    bool fFillNTuple;
-    const MSCDetectorConstruction* fDetConstruction;
+  EventAction* fEventAction;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

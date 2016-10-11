@@ -23,51 +23,51 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCActionInitialization.cc 68058 2013-03-13 14:47:43Z gcosmo $
+// $Id: EventAction.cc 94486 2015-11-19 08:33:37Z gcosmo $
 //
-/// \file MSCActionInitialization.cc
-/// \brief Implementation of the MSCActionInitialization class
+/// \file EventAction.cc
+/// \brief Implementation of the EventAction class
 
-#include "MSCActionInitialization.hh"
-#include "MSCPrimaryGeneratorAction.hh"
-#include "MSCRunAction.hh"
-#include "MSCEventAction.hh"
-#include "MSCSteppingAction.hh"
+#include "EventAction.hh"
+#include "Analysis.hh"
+
+#include "G4Event.hh"
+#include "G4RunManager.hh"
+#include "G4EventManager.hh"
+#include "G4HCofThisEvent.hh"
+#include "G4VHitsCollection.hh"
+#include "G4SDManager.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4ios.hh"
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MSCActionInitialization::MSCActionInitialization(const MSCDetectorConstruction* detConstruction)
- : G4VUserActionInitialization(),
-   fDetConstruction(detConstruction)
+EventAction::EventAction()
+: G4UserEventAction()
 {
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-MSCActionInitialization::~MSCActionInitialization()
+EventAction::~EventAction()
 {
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void MSCActionInitialization::BuildForMaster() const
+void EventAction::BeginOfEventAction(const G4Event*)
 {
-  MSCEventAction* eventAction = 0;
-  SetUserAction(new MSCRunAction(eventAction));
-}
+
+}     
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void MSCActionInitialization::Build() const
+void EventAction::EndOfEventAction(const G4Event* event)
 {
-  MSCEventAction* eventAction = new MSCEventAction;
 
-  SetUserAction(new MSCPrimaryGeneratorAction);
-  SetUserAction(new MSCRunAction(eventAction));
-  SetUserAction(eventAction);
-  SetUserAction(new MSCSteppingAction(fDetConstruction));
-}  
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

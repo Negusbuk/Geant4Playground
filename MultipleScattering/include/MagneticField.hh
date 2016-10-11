@@ -23,33 +23,37 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: MSCEventAction.hh 94486 2015-11-19 08:33:37Z gcosmo $
+// $Id: MagneticField.hh 76474 2013-11-11 10:36:34Z gcosmo $
 //
-/// \file MSCEventAction.hh
-/// \brief Definition of the MSCEventAction class
+/// \file MagneticField.hh
+/// \brief Definition of the MagneticField class
 
-#ifndef MSCEventAction_h
-#define MSCEventAction_h 1
+#ifndef MagneticField_H
+#define MagneticField_H 1
 
-
-#include "G4UserEventAction.hh"
 #include "globals.hh"
+#include "G4MagneticField.hh"
 
-#include <vector>
+class G4GenericMessenger;
 
-/// Event action
+/// Magnetic field
 
-class MSCEventAction : public G4UserEventAction
+class MagneticField : public G4MagneticField
 {
 public:
-    MSCEventAction();
-    virtual ~MSCEventAction();
+    MagneticField();
+    virtual ~MagneticField();
     
-    virtual void BeginOfEventAction(const G4Event*);
-    virtual void EndOfEventAction(const G4Event*);
-
+    virtual void GetFieldValue(const G4double point[4],double* bField ) const;
+    
+    void SetField(G4double val) { fBy = val; }
+    G4double GetField() const { return fBy; }
+    
 private:
+    void DefineCommands();
 
+    G4GenericMessenger* fMessenger;
+    G4double fBy;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
