@@ -1,0 +1,13 @@
+
+/run/initialize
+
+/MSC/detector/material G4_U
+/MSC/field/value 0
+
+/tracking/verbose 0
+
+/MSC/stepping/ntuple true
+
+/MSC/generator/momentum 1
+/analysis/setFileName MSC_mu_0001GeV_Uranium
+/run/beamOn 250
