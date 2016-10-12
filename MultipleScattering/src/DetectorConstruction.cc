@@ -176,7 +176,7 @@ void DetectorConstruction::ConstructMaterials()
 {
   G4NistManager* nistManager = G4NistManager::Instance();
 
-  nistManager->ListMaterials("all");
+  // nistManager->ListMaterials("all");
 
   nistManager->FindOrBuildMaterial("G4_Galactic");
   nistManager->FindOrBuildMaterial("G4_AIR");
