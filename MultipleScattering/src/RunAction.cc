@@ -63,15 +63,16 @@ RunAction::RunAction(EventAction* eventAction)
 
   if (fEventAction) {
     analysisManager->CreateNtuple("steps", "Steps");
-    analysisManager->CreateNtupleDColumn("ParentID"); // column Id = 0
-    analysisManager->CreateNtupleDColumn("TrackID");  // column Id = 1
-    analysisManager->CreateNtupleDColumn("x");        // column Id = 2
-    analysisManager->CreateNtupleDColumn("y");        // column Id = 3
-    analysisManager->CreateNtupleDColumn("z");        // column Id = 4
-    analysisManager->CreateNtupleDColumn("p");        // column Id = 5
-    analysisManager->CreateNtupleDColumn("dE");       // column Id = 6
-    analysisManager->CreateNtupleDColumn("l");        // column Id = 7
-    analysisManager->CreateNtupleIColumn("state");    // column Id = 8
+    analysisManager->CreateNtupleIColumn("ParentID"); // column Id = 0
+    analysisManager->CreateNtupleIColumn("TrackID");  // column Id = 1
+    analysisManager->CreateNtupleIColumn("StepID");   // column Id = 2
+    analysisManager->CreateNtupleDColumn("x");        // column Id = 3
+    analysisManager->CreateNtupleDColumn("y");        // column Id = 4
+    analysisManager->CreateNtupleDColumn("z");        // column Id = 5
+    analysisManager->CreateNtupleDColumn("p");        // column Id = 6
+    analysisManager->CreateNtupleDColumn("dE");       // column Id = 7
+    analysisManager->CreateNtupleDColumn("l");        // column Id = 8
+    analysisManager->CreateNtupleIColumn("state");    // column Id = 9
     analysisManager->FinishNtuple();
   }
 }

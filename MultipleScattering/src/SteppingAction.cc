@@ -92,15 +92,16 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   }
 
   if (fFillNTuple) {
-    analysisManager->FillNtupleDColumn(0, step->GetTrack()->GetParentID());
-    analysisManager->FillNtupleDColumn(1, step->GetTrack()->GetTrackID());
-    analysisManager->FillNtupleDColumn(2, step->GetPreStepPoint()->GetPosition().x()/mm);
-    analysisManager->FillNtupleDColumn(3, step->GetPreStepPoint()->GetPosition().y()/mm);
-    analysisManager->FillNtupleDColumn(4, step->GetPreStepPoint()->GetPosition().z()/mm);
-    analysisManager->FillNtupleDColumn(5, step->GetTrack()->GetMomentum().mag()/GeV);
-    analysisManager->FillNtupleDColumn(6, step->GetTotalEnergyDeposit()/keV);
-    analysisManager->FillNtupleDColumn(7, step->GetStepLength()/mm);
-    analysisManager->FillNtupleIColumn(8, state);
+    analysisManager->FillNtupleIColumn(0, step->GetTrack()->GetParentID());
+    analysisManager->FillNtupleIColumn(1, step->GetTrack()->GetTrackID());
+    analysisManager->FillNtupleIColumn(2, step->GetTrack()->GetCurrentStepNumber());
+    analysisManager->FillNtupleDColumn(3, step->GetPreStepPoint()->GetPosition().x()/mm);
+    analysisManager->FillNtupleDColumn(4, step->GetPreStepPoint()->GetPosition().y()/mm);
+    analysisManager->FillNtupleDColumn(5, step->GetPreStepPoint()->GetPosition().z()/mm);
+    analysisManager->FillNtupleDColumn(6, step->GetTrack()->GetMomentum().mag()/GeV);
+    analysisManager->FillNtupleDColumn(7, step->GetTotalEnergyDeposit()/keV);
+    analysisManager->FillNtupleDColumn(8, step->GetStepLength()/mm);
+    analysisManager->FillNtupleIColumn(9, state);
     analysisManager->AddNtupleRow();
   }
 }
