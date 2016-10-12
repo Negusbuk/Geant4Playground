@@ -129,7 +129,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                                         fAbsorberLogical, "AbsorberPhysical",
                                         worldLogical, false, 0, false);
 
-  G4UserLimits* userWorldLimits = new G4UserLimits(1000.0*um);
+  G4UserLimits* userWorldLimits = new G4UserLimits(100.0*um);
   worldLogical->SetUserLimits(userWorldLimits);
 
   G4UserLimits* userAbsorberLimits = new G4UserLimits(10.0*um);
