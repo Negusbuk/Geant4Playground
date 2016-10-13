@@ -1,0 +1,17 @@
+
+/run/initialize
+
+/Negusbuk/detector/material G4_U
+/Negusbuk/field/value 0
+
+/tracking/verbose 0
+
+/Negusbuk/stepping/ntuple true
+
+/Negusbuk/generator/momentum 0.75
+/analysis/setFileName BraggPeak_p_0750MeV_Uranium
+/run/beamOn 10
+
+#/Negusbuk/generator/momentum 1.0
+#/analysis/setFileName BraggPeak_p_1000MeV_Uranium
+#/run/beamOn 10
