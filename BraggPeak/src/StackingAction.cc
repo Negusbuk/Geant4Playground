@@ -23,55 +23,32 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerActionInitialization.cc 68058 2013-03-13 14:47:43Z gcosmo $
-//
-/// \file ShowerActionInitialization.cc
-/// \brief Implementation of the ShowerActionInitialization class
+// -------------------------------------------------------------------
+// $Id$
+// -------------------------------------------------------------------
 
-#include "ShowerActionInitialization.hh"
-#include "ShowerPrimaryGeneratorAction.hh"
-#include "ShowerRunAction.hh"
-#include "ShowerEventAction.hh"
+#include "G4Track.hh"
+#include "G4Gamma.hh"
+
 #include "StackingAction.hh"
-#include "TrackingAction.hh"
-#include "ShowerSteppingAction.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-ShowerActionInitialization::ShowerActionInitialization(const ShowerDetectorConstruction* detConstruction)
- : G4VUserActionInitialization(),
-   fDetConstruction(detConstruction)
+StackingAction::StackingAction()
 {
 
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-ShowerActionInitialization::~ShowerActionInitialization()
+StackingAction::~StackingAction()
 {
 
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void ShowerActionInitialization::BuildForMaster() const
+G4ClassificationOfNewTrack StackingAction::ClassifyNewTrack(const G4Track* aTrack)
 {
-  ShowerEventAction* eventAction = 0;
-  SetUserAction(new ShowerRunAction(eventAction));
+  // const G4ParticleDefinition* particleDefinition = aTrack->GetParticleDefinition();
+
+  //if (particleDefinition == G4Gamma::Definition()) return fKill;
+  //if (particleDefinition->GetPDGCharge()==0.) return fKill;
+
+  if (aTrack->GetParentID()==0) return fUrgent;
+  return fWaiting;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void ShowerActionInitialization::Build() const
-{
-  ShowerEventAction* eventAction = new ShowerEventAction;
-
-  SetUserAction(new ShowerPrimaryGeneratorAction);
-  SetUserAction(new ShowerRunAction(eventAction));
-  SetUserAction(eventAction);
-  SetUserAction(new TrackingAction);
-  SetUserAction(new StackingAction);
-  SetUserAction(new ShowerSteppingAction(fDetConstruction, eventAction));
-}  
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

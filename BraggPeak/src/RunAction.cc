@@ -23,14 +23,14 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerRunAction.cc 74204 2013-10-01 07:04:43Z ihrivnac $
+// $Id: RunAction.cc 74204 2013-10-01 07:04:43Z ihrivnac $
 //
-/// \file ShowerRunAction.cc
-/// \brief Implementation of the ShowerRunAction class
+/// \file RunAction.cc
+/// \brief Implementation of the RunAction class
 
-#include "ShowerRunAction.hh"
-#include "ShowerEventAction.hh"
-#include "ShowerAnalysis.hh"
+#include "RunAction.hh"
+#include "EventAction.hh"
+#include "Analysis.hh"
 
 #include "G4Run.hh"
 #include "G4UnitsTable.hh"
@@ -38,19 +38,19 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerRunAction::ShowerRunAction(ShowerEventAction* eventAction)
+RunAction::RunAction(EventAction* eventAction)
  : G4UserRunAction(),
    fEventAction(eventAction)
 { 
   // Create analysis manager
   // The choice of analysis technology is done via selectin of a namespace
-  // in ShowerAnalysis.hh
+  // in Analysis.hh
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
   G4cout << "Using " << analysisManager->GetType() << G4endl;
 
   // Default settings
   analysisManager->SetVerboseLevel(1);
-  analysisManager->SetFileName("Shower");
+  analysisManager->SetFileName("");
 
   analysisManager->CreateH1("dE vs Z","dE vs Z",            // h1 Id = 0
                             100, 50, 150);
@@ -71,14 +71,14 @@ ShowerRunAction::ShowerRunAction(ShowerEventAction* eventAction)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerRunAction::~ShowerRunAction()
+RunAction::~RunAction()
 {
   delete G4AnalysisManager::Instance();  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerRunAction::BeginOfRunAction(const G4Run* /*run*/)
+void RunAction::BeginOfRunAction(const G4Run* /*run*/)
 { 
   //inform the runManager to save random number seed
   //G4RunManager::GetRunManager()->SetRandomNumberStore(true);
@@ -87,14 +87,14 @@ void ShowerRunAction::BeginOfRunAction(const G4Run* /*run*/)
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
 
   // Open an output file 
-  // The default file name is set in ShowerRunAction::ShowerRunAction(),
+  // The default file name is set in RunAction::RunAction(),
   // it can be overwritten in a macro
   analysisManager->OpenFile();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerRunAction::EndOfRunAction(const G4Run* /*run*/)
+void RunAction::EndOfRunAction(const G4Run* /*run*/)
 {
   // save histograms & ntuple
   //

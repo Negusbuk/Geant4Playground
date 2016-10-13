@@ -23,56 +23,55 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerMagneticField.cc 77656 2013-11-27 08:52:57Z gcosmo $
+// $Id: ActionInitialization.cc 68058 2013-03-13 14:47:43Z gcosmo $
 //
-/// \file ShowerMagneticField.cc
-/// \brief Implementation of the ShowerMagneticField class
+/// \file ActionInitialization.cc
+/// \brief Implementation of the ActionInitialization class
 
-#include "ShowerMagneticField.hh"
-
-#include "G4GenericMessenger.hh"
-#include "G4SystemOfUnits.hh"
-#include "globals.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-ShowerMagneticField::ShowerMagneticField()
-: G4MagneticField(), fMessenger(0), fBy(1.0*tesla)
-{
-    // define commands for this class
-    DefineCommands();
-}
+#include "ActionInitialization.hh"
+#include "PrimaryGeneratorAction.hh"
+#include "RunAction.hh"
+#include "EventAction.hh"
+#include "StackingAction.hh"
+#include "TrackingAction.hh"
+#include "SteppingAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerMagneticField::~ShowerMagneticField()
-{ 
-    delete fMessenger; 
-}
-
-void ShowerMagneticField::GetFieldValue(const G4double [4],double *bField) const
+ActionInitialization::ActionInitialization(const DetectorConstruction* detConstruction)
+ : G4VUserActionInitialization(),
+   fDetConstruction(detConstruction)
 {
-    bField[0] = 0.;
-    bField[1] = fBy;
-    bField[2] = 0.;
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerMagneticField::DefineCommands()
+ActionInitialization::~ActionInitialization()
 {
-    // Define /Shower/field command directory using generic messenger class
-    fMessenger = new G4GenericMessenger(this, 
-                                        "/Shower/field/",
-                                        "Field control");
 
-    // fieldValue command 
-    G4GenericMessenger::Command& valueCmd
-      = fMessenger->DeclareMethodWithUnit("value","tesla",
-                                  &ShowerMagneticField::SetField,
-                                  "Set field strength.");
-    valueCmd.SetParameterName("field", true);
-    valueCmd.SetDefaultValue("1.");
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void ActionInitialization::BuildForMaster() const
+{
+  EventAction* eventAction = 0;
+  SetUserAction(new RunAction(eventAction));
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void ActionInitialization::Build() const
+{
+  EventAction* eventAction = new EventAction;
+
+  SetUserAction(new PrimaryGeneratorAction);
+  SetUserAction(new RunAction(eventAction));
+  SetUserAction(eventAction);
+  SetUserAction(new TrackingAction);
+  SetUserAction(new StackingAction);
+  SetUserAction(new SteppingAction(fDetConstruction, eventAction));
+}  
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

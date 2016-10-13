@@ -23,12 +23,12 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerPrimaryGeneratorAction.cc 77781 2013-11-28 07:54:07Z gcosmo $
+// $Id: PrimaryGeneratorAction.cc 77781 2013-11-28 07:54:07Z gcosmo $
 //
-/// \file ShowerPrimaryGeneratorAction.cc
-/// \brief Implementation of the ShowerPrimaryGeneratorAction class
+/// \file PrimaryGeneratorAction.cc
+/// \brief Implementation of the PrimaryGeneratorAction class
 
-#include "ShowerPrimaryGeneratorAction.hh"
+#include "PrimaryGeneratorAction.hh"
 
 #include "G4Event.hh"
 #include "G4ParticleGun.hh"
@@ -40,7 +40,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerPrimaryGeneratorAction::ShowerPrimaryGeneratorAction()
+PrimaryGeneratorAction::PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction(),     
   fParticleGun(0), fMessenger(0), 
   fPositron(0), fMuon(0), fPion(0), fKaon(0), fProton(0),
@@ -68,7 +68,7 @@ ShowerPrimaryGeneratorAction::ShowerPrimaryGeneratorAction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerPrimaryGeneratorAction::~ShowerPrimaryGeneratorAction()
+PrimaryGeneratorAction::~PrimaryGeneratorAction()
 {
   delete fParticleGun;
   delete fMessenger;
@@ -76,7 +76,7 @@ ShowerPrimaryGeneratorAction::~ShowerPrimaryGeneratorAction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerPrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
+void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 {
   G4ParticleDefinition* particle = fProton;
   fParticleGun->SetParticleDefinition(particle);
@@ -93,11 +93,11 @@ void ShowerPrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerPrimaryGeneratorAction::DefineCommands()
+void PrimaryGeneratorAction::DefineCommands()
 {
-  // Define /Shower/generator command directory using generic messenger class
+  // Define //generator command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
-                                      "/Shower/generator/",
+                                      "//generator/",
                                       "Primary generator control");
 
   // momentum command

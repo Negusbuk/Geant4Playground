@@ -23,15 +23,38 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerAnalysis.hh 66536 2012-12-19 14:32:36Z ihrivnac $
+// $Id: EventAction.hh 94486 2015-11-19 08:33:37Z gcosmo $
 //
-/// \file ShowerAnalysis.hh
-/// \brief Selection of the analysis technology
+/// \file EventAction.hh
+/// \brief Definition of the EventAction class
 
-#ifndef ShowerAnalysis_h
-#define ShowerAnalysis_h 1
+#ifndef EventAction_h
+#define EventAction_h 1
 
-#include "g4root.hh"
-//#include "g4xml.hh"
+#include "G4UserEventAction.hh"
+#include "globals.hh"
+
+#include <vector>
+#include <map>
+
+/// Event action
+
+class EventAction : public G4UserEventAction
+{
+public:
+  EventAction();
+  virtual ~EventAction();
+
+  virtual void BeginOfEventAction(const G4Event*);
+  virtual void EndOfEventAction(const G4Event*);
+
+  void AddDE(double z, double e);
+
+private:
+
+  std::map<int,double> dE;
+};
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

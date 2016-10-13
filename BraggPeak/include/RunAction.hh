@@ -23,32 +23,37 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// -------------------------------------------------------------------
-// $Id$
-// -------------------------------------------------------------------
+// $Id: RunAction.hh 74204 2013-10-01 07:04:43Z ihrivnac $
+// 
+/// \file RunAction.hh
+/// \brief Definition of the RunAction class
 
-#include "G4Track.hh"
-#include "G4Gamma.hh"
+#ifndef RunAction_h
+#define RunAction_h 1
 
-#include "StackingAction.hh"
+#include "G4UserRunAction.hh"
+#include "globals.hh"
 
-StackingAction::StackingAction()
+class EventAction;
+
+class G4Run;
+
+/// Run action class
+
+class RunAction : public G4UserRunAction
 {
+public:
+  RunAction(EventAction* eventAction);
+  virtual ~RunAction();
 
-}
+  virtual void BeginOfRunAction(const G4Run*);
+  virtual void   EndOfRunAction(const G4Run*);
 
-StackingAction::~StackingAction()
-{
+private:
 
-}
+  EventAction* fEventAction;
+};
 
-G4ClassificationOfNewTrack StackingAction::ClassifyNewTrack(const G4Track* aTrack)
-{
-  const G4ParticleDefinition* particleDefinition = aTrack->GetParticleDefinition();
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-  //if (particleDefinition == G4Gamma::Definition()) return fKill;
-  //if (particleDefinition->GetPDGCharge()==0.) return fKill;
-
-  if (aTrack->GetParentID()==0) return fUrgent;
-  return fWaiting;
-}
+#endif

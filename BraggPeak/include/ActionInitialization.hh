@@ -23,46 +23,36 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerSteppingAction.hh 68058 2013-03-13 14:47:43Z gcosmo $
-// 
-/// \file ShowerSteppingAction.hh
-/// \brief Definition of the ShowerSteppingAction class
+// $Id: ActionInitialization.hh 68058 2013-03-13 14:47:43Z gcosmo $
+//
+/// \file ActionInitialization.hh
+/// \brief Definition of the ActionInitialization class
 
-#ifndef ShowerSteppingAction_h
-#define ShowerSteppingAction_h 1
+#ifndef ActionInitialization_h
+#define ActionInitialization_h 1
 
-#include "G4UserSteppingAction.hh"
+#include "G4VUserActionInitialization.hh"
 
-class G4GenericMessenger;
+#include "DetectorConstruction.hh"
 
-class ShowerDetectorConstruction;
-class ShowerEventAction;
+/// Action initialization class.
 
-/// Stepping action class.
-///
-/// In UserSteppingAction() there are collected the energy deposit and track 
-/// lengths of charged particles in Absober and Gap layers and
-/// updated in ShowerEventAction.
-
-class ShowerSteppingAction : public G4UserSteppingAction
+class ActionInitialization : public G4VUserActionInitialization
 {
 public:
-  ShowerSteppingAction(const ShowerDetectorConstruction* detectorConstruction,
-                       ShowerEventAction* eventAction);
-  virtual ~ShowerSteppingAction();
+  ActionInitialization(const DetectorConstruction* detConstruction);
+  virtual ~ActionInitialization();
 
-  virtual void UserSteppingAction(const G4Step* step);
+  virtual void BuildForMaster() const;
+  virtual void Build() const;
 
-private:
+protected:
 
-    void DefineCommands();
-
-    G4GenericMessenger* fMessenger;
-    bool fFillNTuple;
-    const ShowerDetectorConstruction* fDetConstruction;
-    ShowerEventAction* fEventAction;
+  const DetectorConstruction* fDetConstruction;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
+
+

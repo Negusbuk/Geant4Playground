@@ -23,13 +23,13 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerDetectorConstruction.cc 77656 2013-11-27 08:52:57Z gcosmo $
+// $Id: DetectorConstruction.cc 77656 2013-11-27 08:52:57Z gcosmo $
 //
-/// \file ShowerDetectorConstruction.cc
-/// \brief Implementation of the ShowerDetectorConstruction class
+/// \file DetectorConstruction.cc
+/// \brief Implementation of the DetectorConstruction class
 
-#include "ShowerDetectorConstruction.hh"
-#include "ShowerMagneticField.hh"
+#include "DetectorConstruction.hh"
+#include "MagneticField.hh"
 
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
@@ -64,12 +64,12 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-G4ThreadLocal ShowerMagneticField* ShowerDetectorConstruction::fMagneticField = 0;
-G4ThreadLocal G4FieldManager* ShowerDetectorConstruction::fFieldMgr = 0;
+G4ThreadLocal MagneticField* DetectorConstruction::fMagneticField = 0;
+G4ThreadLocal G4FieldManager* DetectorConstruction::fFieldMgr = 0;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerDetectorConstruction::ShowerDetectorConstruction()
+DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction(), 
   fMessenger(0),
   fAbsorberLogical(0),
@@ -80,7 +80,7 @@ ShowerDetectorConstruction::ShowerDetectorConstruction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerDetectorConstruction::~ShowerDetectorConstruction()
+DetectorConstruction::~DetectorConstruction()
 {
   delete fMessenger;
 
@@ -92,7 +92,7 @@ ShowerDetectorConstruction::~ShowerDetectorConstruction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-G4VPhysicalVolume* ShowerDetectorConstruction::Construct()
+G4VPhysicalVolume* DetectorConstruction::Construct()
 {
   // Construct materials
   ConstructMaterials();
@@ -154,11 +154,11 @@ G4VPhysicalVolume* ShowerDetectorConstruction::Construct()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerDetectorConstruction::ConstructSDandField()
+void DetectorConstruction::ConstructSDandField()
 {
   // magnetic field ----------------------------------------------------------
 
-  fMagneticField = new ShowerMagneticField();
+  fMagneticField = new MagneticField();
   fFieldMgr = new G4FieldManager();
   fFieldMgr->SetDetectorField(fMagneticField);
   fFieldMgr->CreateChordFinder(fMagneticField);
@@ -172,7 +172,7 @@ void ShowerDetectorConstruction::ConstructSDandField()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerDetectorConstruction::ConstructMaterials()
+void DetectorConstruction::ConstructMaterials()
 {
   G4NistManager* nistManager = G4NistManager::Instance();
 
@@ -194,19 +194,19 @@ void ShowerDetectorConstruction::ConstructMaterials()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerDetectorConstruction::DefineCommands()
+void DetectorConstruction::DefineCommands()
 {
-  // Define /Shower/detector command directory using generic messenger class
+  // Define //detector command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
-                                      "/Shower/detector/",
+                                      "//detector/",
                                       "Detector control");
 
   fMessenger->DeclareMethod("list",
-                            &ShowerDetectorConstruction::ListMaterials,
+                            &DetectorConstruction::ListMaterials,
                             "List known Materials.");
 
   G4GenericMessenger::Command& materialCmd = fMessenger->DeclareMethod("material",
-                                                                    &ShowerDetectorConstruction::SetAbsorberMaterial,
+                                                                    &DetectorConstruction::SetAbsorberMaterial,
                                                                     "Set Material of the Absorber.");
   materialCmd.SetParameterName("material", true);
   materialCmd.SetDefaultValue("G4_Galactic");
@@ -214,7 +214,7 @@ void ShowerDetectorConstruction::DefineCommands()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerDetectorConstruction::ListMaterials()
+void DetectorConstruction::ListMaterials()
 {
   // get the pointer to the material table
   const G4MaterialTable* theMaterialTable = G4Material::GetMaterialTable();
@@ -230,7 +230,7 @@ void ShowerDetectorConstruction::ListMaterials()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerDetectorConstruction::SetAbsorberMaterial(G4String materialChoice)
+void DetectorConstruction::SetAbsorberMaterial(G4String materialChoice)
 {
   // get the pointer to the material table
   const G4MaterialTable* theMaterialTable = G4Material::GetMaterialTable();

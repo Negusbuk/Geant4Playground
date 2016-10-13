@@ -23,39 +23,56 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerEventAction.hh 94486 2015-11-19 08:33:37Z gcosmo $
+// $Id: MagneticField.cc 77656 2013-11-27 08:52:57Z gcosmo $
 //
-/// \file ShowerEventAction.hh
-/// \brief Definition of the ShowerEventAction class
+/// \file MagneticField.cc
+/// \brief Implementation of the MagneticField class
 
-#ifndef ShowerEventAction_h
-#define ShowerEventAction_h 1
+#include "MagneticField.hh"
 
-
-#include "G4UserEventAction.hh"
+#include "G4GenericMessenger.hh"
+#include "G4SystemOfUnits.hh"
 #include "globals.hh"
-
-#include <vector>
-#include <map>
-
-/// Event action
-
-class ShowerEventAction : public G4UserEventAction
-{
-public:
-    ShowerEventAction();
-    virtual ~ShowerEventAction();
-    
-    virtual void BeginOfEventAction(const G4Event*);
-    virtual void EndOfEventAction(const G4Event*);
-
-    void AddDE(double z, double e);
-
-private:
-
-    std::map<int,double> dE;
-};
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#endif
+MagneticField::MagneticField()
+: G4MagneticField(), fMessenger(0), fBy(1.0*tesla)
+{
+    // define commands for this class
+    DefineCommands();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+MagneticField::~MagneticField()
+{ 
+    delete fMessenger; 
+}
+
+void MagneticField::GetFieldValue(const G4double [4],double *bField) const
+{
+    bField[0] = 0.;
+    bField[1] = fBy;
+    bField[2] = 0.;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void MagneticField::DefineCommands()
+{
+    // Define //field command directory using generic messenger class
+    fMessenger = new G4GenericMessenger(this, 
+                                        "//field/",
+                                        "Field control");
+
+    // fieldValue command 
+    G4GenericMessenger::Command& valueCmd
+      = fMessenger->DeclareMethodWithUnit("value","tesla",
+                                  &MagneticField::SetField,
+                                  "Set field strength.");
+    valueCmd.SetParameterName("field", true);
+    valueCmd.SetDefaultValue("1.");
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

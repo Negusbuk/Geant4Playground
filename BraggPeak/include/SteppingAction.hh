@@ -23,37 +23,44 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerMagneticField.hh 76474 2013-11-11 10:36:34Z gcosmo $
-//
-/// \file ShowerMagneticField.hh
-/// \brief Definition of the ShowerMagneticField class
+// $Id: SteppingAction.hh 68058 2013-03-13 14:47:43Z gcosmo $
+// 
+/// \file SteppingAction.hh
+/// \brief Definition of the SteppingAction class
 
-#ifndef ShowerMagneticField_H
-#define ShowerMagneticField_H 1
+#ifndef SteppingAction_h
+#define SteppingAction_h 1
 
-#include "globals.hh"
-#include "G4MagneticField.hh"
+#include "G4UserSteppingAction.hh"
 
 class G4GenericMessenger;
 
-/// Magnetic field
+class DetectorConstruction;
+class EventAction;
 
-class ShowerMagneticField : public G4MagneticField
+/// Stepping action class.
+///
+/// In UserSteppingAction() there are collected the energy deposit and track 
+/// lengths of charged particles in Absober and Gap layers and
+/// updated in EventAction.
+
+class SteppingAction : public G4UserSteppingAction
 {
 public:
-    ShowerMagneticField();
-    virtual ~ShowerMagneticField();
-    
-    virtual void GetFieldValue(const G4double point[4],double* bField ) const;
-    
-    void SetField(G4double val) { fBy = val; }
-    G4double GetField() const { return fBy; }
-    
-private:
-    void DefineCommands();
+  SteppingAction(const DetectorConstruction* detectorConstruction,
+                 EventAction* eventAction);
+  virtual ~SteppingAction();
 
-    G4GenericMessenger* fMessenger;
-    G4double fBy;
+  virtual void UserSteppingAction(const G4Step* step);
+
+protected:
+
+  void DefineCommands();
+
+  G4GenericMessenger* fMessenger;
+  bool fFillNTuple;
+  const DetectorConstruction* fDetConstruction;
+  EventAction* fEventAction;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

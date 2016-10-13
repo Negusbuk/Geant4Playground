@@ -23,13 +23,13 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerDetectorConstruction.hh 76474 2013-11-11 10:36:34Z gcosmo $
+// $Id: DetectorConstruction.hh 76474 2013-11-11 10:36:34Z gcosmo $
 //
-/// \file ShowerDetectorConstruction.hh
-/// \brief Definition of the ShowerDetectorConstruction class
+/// \file DetectorConstruction.hh
+/// \brief Definition of the DetectorConstruction class
 
-#ifndef ShowerDetectorConstruction_h
-#define ShowerDetectorConstruction_h 1
+#ifndef DetectorConstruction_h
+#define DetectorConstruction_h 1
 
 #include "globals.hh"
 #include "G4VUserDetectorConstruction.hh"
@@ -39,7 +39,7 @@
 
 #include <vector>
 
-class ShowerMagneticField;
+class MagneticField;
 
 class G4VPhysicalVolume;
 class G4Material;
@@ -49,11 +49,11 @@ class G4GenericMessenger;
 
 /// Detector construction
 
-class ShowerDetectorConstruction : public G4VUserDetectorConstruction
+class DetectorConstruction : public G4VUserDetectorConstruction
 {
 public:
-  ShowerDetectorConstruction();
-  virtual ~ShowerDetectorConstruction();
+  DetectorConstruction();
+  virtual ~DetectorConstruction();
 
   virtual G4VPhysicalVolume* Construct();
   virtual void ConstructSDandField();
@@ -71,7 +71,7 @@ private:
 
   G4GenericMessenger* fMessenger;
 
-  static G4ThreadLocal ShowerMagneticField* fMagneticField;
+  static G4ThreadLocal MagneticField* fMagneticField;
   static G4ThreadLocal G4FieldManager* fFieldMgr;
 
   G4LogicalVolume* fAbsorberLogical;

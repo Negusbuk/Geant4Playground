@@ -3,7 +3,7 @@
 # GNUmakefile for examples module
 # --------------------------------------------------------------
 
-name := Shower
+name := BraggPeak
 G4TARGET := $(name)
 G4EXLIB := true
 

@@ -23,15 +23,15 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerSteppingAction.cc 68058 2013-03-13 14:47:43Z gcosmo $
+// $Id: SteppingAction.cc 68058 2013-03-13 14:47:43Z gcosmo $
 // 
-/// \file ShowerSteppingAction.cc
-/// \brief Implementation of the ShowerSteppingAction class
+/// \file SteppingAction.cc
+/// \brief Implementation of the SteppingAction class
 
-#include "ShowerSteppingAction.hh"
-#include "ShowerEventAction.hh"
-#include "ShowerDetectorConstruction.hh"
-#include "ShowerAnalysis.hh"
+#include "SteppingAction.hh"
+#include "EventAction.hh"
+#include "DetectorConstruction.hh"
+#include "Analysis.hh"
 
 #include "G4Step.hh"
 #include "G4RunManager.hh"
@@ -40,8 +40,8 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerSteppingAction::ShowerSteppingAction(const ShowerDetectorConstruction* detectorConstruction,
-                                           ShowerEventAction* eventAction)
+SteppingAction::SteppingAction(const DetectorConstruction* detectorConstruction,
+                                           EventAction* eventAction)
   : G4UserSteppingAction(),
     fFillNTuple(true),
     fDetConstruction(detectorConstruction),
@@ -52,14 +52,14 @@ ShowerSteppingAction::ShowerSteppingAction(const ShowerDetectorConstruction* det
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ShowerSteppingAction::~ShowerSteppingAction()
+SteppingAction::~SteppingAction()
 { 
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerSteppingAction::UserSteppingAction(const G4Step* step)
+void SteppingAction::UserSteppingAction(const G4Step* step)
 {
   //if (step->GetTrack()->GetDefinition()->GetPDGCharge() == 0.) return;
 
@@ -92,11 +92,11 @@ void ShowerSteppingAction::UserSteppingAction(const G4Step* step)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ShowerSteppingAction::DefineCommands()
+void SteppingAction::DefineCommands()
 {
-  // Define /Shower/detector command directory using generic messenger class
+  // Define //detector command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
-                                      "/Shower/stepping/",
+                                      "//stepping/",
                                       "Stepping control");
 
   G4GenericMessenger::Command& ntupleCmd = fMessenger->DeclareProperty("ntuple", fFillNTuple);

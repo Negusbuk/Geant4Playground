@@ -23,71 +23,14 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerEventAction.cc 94486 2015-11-19 08:33:37Z gcosmo $
+// $Id: Analysis.hh 66536 2012-12-19 14:32:36Z ihrivnac $
 //
-/// \file ShowerEventAction.cc
-/// \brief Implementation of the ShowerEventAction class
+/// \file Analysis.hh
+/// \brief Selection of the analysis technology
 
-#include "ShowerEventAction.hh"
-#include "ShowerAnalysis.hh"
+#ifndef Analysis_h
+#define Analysis_h 1
 
-#include "G4Event.hh"
-#include "G4RunManager.hh"
-#include "G4EventManager.hh"
-#include "G4HCofThisEvent.hh"
-#include "G4VHitsCollection.hh"
-#include "G4SDManager.hh"
-#include "G4SystemOfUnits.hh"
-#include "G4ios.hh"
+#include "g4root.hh"
 
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-ShowerEventAction::ShowerEventAction()
-: G4UserEventAction()
-{
-
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-ShowerEventAction::~ShowerEventAction()
-{
-
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void ShowerEventAction::BeginOfEventAction(const G4Event*)
-{
-  for (std::map<int,double>::iterator it = dE.begin();
-       it!=dE.end();
-       ++it) {
-    it->second = 0;
-  }
-}     
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void ShowerEventAction::EndOfEventAction(const G4Event* event)
-{
-  // Get analysis manager
-  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
-
-  for (std::map<int,double>::iterator it = dE.begin();
-       it!=dE.end();
-       ++it) {
-    analysisManager->FillH1(0, it->first, it->second);
-  }
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void ShowerEventAction::AddDE(double z, double e)
-{
-  int bin = (int)z;
-
-  dE[bin] += e;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+#endif

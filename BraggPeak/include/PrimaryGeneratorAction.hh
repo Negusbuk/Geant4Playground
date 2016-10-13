@@ -23,13 +23,13 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerPrimaryGeneratorAction.hh 76474 2013-11-11 10:36:34Z gcosmo $
+// $Id: PrimaryGeneratorAction.hh 76474 2013-11-11 10:36:34Z gcosmo $
 //
-/// \file ShowerPrimaryGeneratorAction.hh
-/// \brief Definition of the ShowerPrimaryGeneratorAction class
+/// \file PrimaryGeneratorAction.hh
+/// \brief Definition of the PrimaryGeneratorAction class
 
-#ifndef ShowerPrimaryGeneratorAction_h
-#define ShowerPrimaryGeneratorAction_h 1
+#ifndef PrimaryGeneratorAction_h
+#define PrimaryGeneratorAction_h 1
 
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "globals.hh"
@@ -48,29 +48,29 @@ class G4ParticleDefinition;
 /// - random selection of a particle type from proton, kaon+, pi+, muon+, e+ 
 
 
-class ShowerPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
+class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
-    ShowerPrimaryGeneratorAction();
-    virtual ~ShowerPrimaryGeneratorAction();
-    
-    virtual void GeneratePrimaries(G4Event*);
-    
-    void SetMomentum(G4double val) { fMomentum = val; }
-    G4double GetMomentum() const { return fMomentum; }
-    
-private:
-    void DefineCommands();
+  PrimaryGeneratorAction();
+  virtual ~PrimaryGeneratorAction();
 
-    G4ParticleGun* fParticleGun;
-    G4GenericMessenger* fMessenger;
-    G4ParticleDefinition* fPositron;
-    G4ParticleDefinition* fMuon;
-    G4ParticleDefinition* fPion;
-    G4ParticleDefinition* fKaon;
-    G4ParticleDefinition* fProton;
-    G4ParticleDefinition* fNeutron;
-    G4double fMomentum;
+  virtual void GeneratePrimaries(G4Event*);
+
+  void SetMomentum(G4double val) { fMomentum = val; }
+  G4double GetMomentum() const { return fMomentum; }
+
+private:
+  void DefineCommands();
+
+  G4ParticleGun* fParticleGun;
+  G4GenericMessenger* fMessenger;
+  G4ParticleDefinition* fPositron;
+  G4ParticleDefinition* fMuon;
+  G4ParticleDefinition* fPion;
+  G4ParticleDefinition* fKaon;
+  G4ParticleDefinition* fProton;
+  G4ParticleDefinition* fNeutron;
+  G4double fMomentum;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -23,37 +23,71 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ShowerRunAction.hh 74204 2013-10-01 07:04:43Z ihrivnac $
-// 
-/// \file ShowerRunAction.hh
-/// \brief Definition of the ShowerRunAction class
+// $Id: EventAction.cc 94486 2015-11-19 08:33:37Z gcosmo $
+//
+/// \file EventAction.cc
+/// \brief Implementation of the EventAction class
 
-#ifndef ShowerRunAction_h
-#define ShowerRunAction_h 1
+#include "EventAction.hh"
+#include "Analysis.hh"
 
-#include "G4UserRunAction.hh"
-#include "globals.hh"
+#include "G4Event.hh"
+#include "G4RunManager.hh"
+#include "G4EventManager.hh"
+#include "G4HCofThisEvent.hh"
+#include "G4VHitsCollection.hh"
+#include "G4SDManager.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4ios.hh"
 
-class ShowerEventAction;
-
-class G4Run;
-
-/// Run action class
-
-class ShowerRunAction : public G4UserRunAction
-{
-public:
-  ShowerRunAction(ShowerEventAction* eventAction);
-  virtual ~ShowerRunAction();
-
-  virtual void BeginOfRunAction(const G4Run*);
-  virtual void   EndOfRunAction(const G4Run*);
-
-private:
-
-  ShowerEventAction* fEventAction;
-};
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#endif
+EventAction::EventAction()
+: G4UserEventAction()
+{
+
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+EventAction::~EventAction()
+{
+
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void EventAction::BeginOfEventAction(const G4Event*)
+{
+  for (std::map<int,double>::iterator it = dE.begin();
+       it!=dE.end();
+       ++it) {
+    it->second = 0;
+  }
+}     
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void EventAction::EndOfEventAction(const G4Event* event)
+{
+  // Get analysis manager
+  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
+
+  for (std::map<int,double>::iterator it = dE.begin();
+       it!=dE.end();
+       ++it) {
+    analysisManager->FillH1(0, it->first, it->second);
+  }
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void EventAction::AddDE(double z, double e)
+{
+  int bin = (int)z;
+
+  dE[bin] += e;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
