@@ -67,15 +67,27 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   if (edep <= 0.) return;
 
   if (step->GetPreStepPoint()->GetPosition().z()>30.0*cm) return;
-  if (step->GetPreStepPoint()->GetPosition().z()<5.0*cm) return;
   if (step->GetStepLength()>1.0*mm) return;
+
+  double preStepPos = step->GetPreStepPoint()->GetPosition().z();
 
   // Get analysis manager
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
 
-  fEventAction->AddDE(step->GetPreStepPoint()->GetPosition().z()/mm, edep);
+  fEventAction->AddDE(preStepPos/mm, edep);
 
   if (step->GetTrack()->GetParentID()!=0) return;
+
+  int state = 0;
+  if (preStepPos<10.0*cm) {
+    state = 0;
+  } else if (preStepPos>=10.0*cm && preStepPos<20.0*cm) {
+    state = 1;
+  } else if (preStepPos==20.0*cm) {
+    state = 2;
+  } else {
+    state = 3;
+  }
 
   if (fFillNTuple) {
     analysisManager->FillNtupleIColumn(0, step->GetTrack()->GetParentID());
