@@ -52,8 +52,8 @@ RunAction::RunAction(EventAction* eventAction)
   analysisManager->SetVerboseLevel(1);
   analysisManager->SetFileName("");
 
-  analysisManager->CreateH1("dE vs Z","dE vs Z",            // h1 Id = 0
-                            100, 50, 150);
+  analysisManager->CreateP1("dE vs Z","dE vs Z",            // p1 Id = 0
+                            300, 0, 300);
 
   if (fEventAction) {
     analysisManager->CreateNtuple("steps", "Steps");
