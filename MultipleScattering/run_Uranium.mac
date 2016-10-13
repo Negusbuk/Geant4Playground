@@ -10,4 +10,4 @@
 
 /MSC/generator/momentum 1
 /analysis/setFileName MSC_mu_0001GeV_Uranium
-/run/beamOn 250
+/run/beamOn 50
