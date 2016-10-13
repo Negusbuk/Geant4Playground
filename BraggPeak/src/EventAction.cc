@@ -60,11 +60,13 @@ EventAction::~EventAction()
 
 void EventAction::BeginOfEventAction(const G4Event*)
 {
+  /*
   for (std::map<int,double>::iterator it = dE.begin();
        it!=dE.end();
        ++it) {
     it->second = 0;
   }
+  */
 }     
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -74,11 +76,13 @@ void EventAction::EndOfEventAction(const G4Event* event)
   // Get analysis manager
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
 
+  /*
   for (std::map<int,double>::iterator it = dE.begin();
        it!=dE.end();
        ++it) {
-    analysisManager->FillH1(0, it->first, it->second);
+    analysisManager->FillP1(0, it->first, it->second);
   }
+  */
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -87,7 +91,7 @@ void EventAction::AddDE(double z, double e)
 {
   int bin = (int)z;
 
-  dE[bin] += e;
+  // dE[bin] += e;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
