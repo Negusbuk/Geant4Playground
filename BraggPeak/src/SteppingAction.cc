@@ -98,7 +98,7 @@ void SteppingAction::DefineCommands()
 {
   // Define //detector command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
-                                      "//stepping/",
+                                      "/Negusbuk/stepping/",
                                       "Stepping control");
 
   G4GenericMessenger::Command& ntupleCmd = fMessenger->DeclareProperty("ntuple", fFillNTuple);
