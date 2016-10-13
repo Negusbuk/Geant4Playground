@@ -63,7 +63,7 @@ void MagneticField::DefineCommands()
 {
     // Define //field command directory using generic messenger class
     fMessenger = new G4GenericMessenger(this, 
-                                        "//field/",
+                                        "/Negusbuk/field/",
                                         "Field control");
 
     // fieldValue command 

@@ -198,7 +198,7 @@ void DetectorConstruction::DefineCommands()
 {
   // Define //detector command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
-                                      "//detector/",
+                                      "/Negusbuk/detector/",
                                       "Detector control");
 
   fMessenger->DeclareMethod("list",

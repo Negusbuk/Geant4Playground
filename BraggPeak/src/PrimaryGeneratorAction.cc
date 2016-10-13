@@ -97,7 +97,7 @@ void PrimaryGeneratorAction::DefineCommands()
 {
   // Define //generator command directory using generic messenger class
   fMessenger = new G4GenericMessenger(this,
-                                      "//generator/",
+                                      "/Negusbuk/generator/",
                                       "Primary generator control");
 
   // momentum command
