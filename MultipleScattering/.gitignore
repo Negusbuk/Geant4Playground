@@ -1,3 +1,8 @@
 MultipleScattering
 G4History.macro
 *.root
+MSC_mu_1GeV.pdf
+MSC_mu_1GeV_Uranium_2D.pdf
+MSC_mu_1GeV_2D.pdf
+Tracing.m4v
+img*.png
