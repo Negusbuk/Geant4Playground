@@ -125,7 +125,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Absorber
   G4VSolid* AbsorberSolid = new G4Box("AbsorberBox", 10.0*cm, 10.0*cm, 5.0*cm);
   fAbsorberLogical = new G4LogicalVolume(AbsorberSolid, theMaterial, "AbsorberLogical");
-  fAbsorberPhysical = new G4PVPlacement(0, G4ThreeVector(0.0*m, 0.0*m, 10.0*cm),
+  fAbsorberPhysical = new G4PVPlacement(0, G4ThreeVector(0.0*m, 0.0*m, 15.0*cm),
                                         fAbsorberLogical, "AbsorberPhysical",
                                         worldLogical, false, 0, false);
 
