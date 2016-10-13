@@ -99,9 +99,9 @@ void RunAction::EndOfRunAction(const G4Run* /*run*/)
   // save histograms & ntuple
   //
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
+
   analysisManager->Write();
   analysisManager->CloseFile();
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
