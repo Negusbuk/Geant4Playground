@@ -43,6 +43,10 @@ void histoComp()
   h4->SetLineWidth(lineWidth);
 
   TH1D* h5 = getHisto("MSC_mu_0001GeV_PbWO4_histo.root", "Exit X");
+  h5->SetName("PbWO4");
+  h5->SetTitle("PbWO4");
+  h5->SetLineColor(6);
+  h5->SetLineWidth(lineWidth);
 
   TH1D* h6 = getHisto("MSC_mu_0001GeV_Pb_histo.root", "Exit X");
   h6->SetName("Lead");
@@ -65,14 +69,14 @@ void histoComp()
   h1->Draw("HIST same");
   h2->Draw("HIST same");
   h4->Draw("HIST same");
-  h6->Draw("HIST same");
+  h5->Draw("HIST same");
   h7->Draw("HIST same");
 
   TLegend * legend = new TLegend(0.75, 0.55, 0.9, 0.9);
   legend->AddEntry(h1);
   legend->AddEntry(h2);
   legend->AddEntry(h4);
-  legend->AddEntry(h6);
+  legend->AddEntry(h5);
   legend->AddEntry(h7);
   legend->Draw();
 
