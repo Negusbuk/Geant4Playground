@@ -10,8 +10,8 @@
 
 /Negusbuk/generator/momentum 0.75
 /analysis/setFileName BraggPeak_p_0750MeV_Uranium
-/run/beamOn 10
+/run/beamOn 100
 
 #/Negusbuk/generator/momentum 1.0
 #/analysis/setFileName BraggPeak_p_1000MeV_Uranium
-#/run/beamOn 10
+#/run/beamOn 100
