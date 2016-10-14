@@ -110,6 +110,9 @@ void RunAction::EndOfRunAction(const G4Run* /*run*/)
   analysisManager->Write();
   analysisManager->CloseFile();
 
+  if (event->GetEventID()%100==0) {
+    G4cout << "processed events: " << event->GetEventID() << G4endl;
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
