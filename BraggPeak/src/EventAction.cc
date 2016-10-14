@@ -83,6 +83,10 @@ void EventAction::EndOfEventAction(const G4Event* event)
     analysisManager->FillP1(0, it->first, it->second);
   }
   */
+
+  if (event->GetEventID()%100==0) {
+    G4cout << "processed events: " << event->GetEventID() << G4endl;
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
