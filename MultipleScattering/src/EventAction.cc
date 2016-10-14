@@ -67,7 +67,9 @@ void EventAction::BeginOfEventAction(const G4Event*)
 
 void EventAction::EndOfEventAction(const G4Event* event)
 {
-
+  if (event->GetEventID()%100==0) {
+    G4cout << "processed events: " << event->GetEventID() << G4endl;
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
