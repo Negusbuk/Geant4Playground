@@ -19,8 +19,6 @@
 #include "G4UIExecutive.hh"
 #endif
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 int main(int argc,char** argv)
 {
 #ifdef G4UI_USE
@@ -94,5 +92,3 @@ int main(int argc,char** argv)
 #endif
   delete runManager;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
