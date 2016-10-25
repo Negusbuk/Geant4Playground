@@ -96,7 +96,7 @@ void traceing()
 
   int scale = 1;
   TCanvas * c = new TCanvas("c", "c", (1280+4)/scale, (720+28)/scale);
-
+  c->SetRightMargin(0.11);
   c->SetFrameFillColor(kAzure-9);
 
   frame = c->DrawFrame(0, -20, 300, 20);
@@ -117,7 +117,7 @@ void traceing()
   delete c;
 
   c = new TCanvas("c", "c", (1280+4)/scale, (720+28)/scale);
-
+  c->SetRightMargin(0.11);
   c->SetFrameFillColor(kAzure-9);
 
   center = (1.25 - 0.25)/2.;
@@ -139,7 +139,7 @@ void traceing()
   delete c;
 
   c = new TCanvas("c", "c", (1280+4)/scale, (720+28)/scale);
-
+  c->SetRightMargin(0.11);
   c->SetFrameFillColor(kAzure-9);
 
   center = (70 - 20)/2.;
