@@ -5,22 +5,20 @@
 
 class G4GenericMessenger;
 
-class DetectorConstruction;
-
 class SteppingAction : public G4UserSteppingAction
 {
 public:
+
   SteppingAction();
   virtual ~SteppingAction();
 
   virtual void UserSteppingAction(const G4Step* step);
 
-private:
+protected:
 
-    void DefineCommands();
+  void DefineCommands();
 
-    G4GenericMessenger* fMessenger;
-    bool fFillNTuple;
+  G4GenericMessenger* fMessenger;
 };
 
 #endif
