@@ -19,14 +19,14 @@ void histoComp()
   int lineWidth = 2;
 
   TH1D* h1 = getHisto("MSC_mu_0001GeV_Graphite_histo.root", "Exit X");
-  h1->SetName("Graphite");
-  h1->SetTitle("Graphite");
+  h1->SetName("Graphit");
+  h1->SetTitle("Graphit");
   h1->SetLineColor(1);
   h1->SetLineWidth(lineWidth);
 
   TH1D* h2 = getHisto("MSC_mu_0001GeV_Si_histo.root", "Exit X");
-  h2->SetName("Silicon");
-  h2->SetTitle("Silicon");
+  h2->SetName("Silizium");
+  h2->SetTitle("Silizium");
   h2->SetLineColor(2);
   h2->SetLineWidth(lineWidth);
 
@@ -37,8 +37,8 @@ void histoComp()
   h3->SetLineWidth(lineWidth);
 
   TH1D* h4 = getHisto("MSC_mu_0001GeV_Brass_histo.root", "Exit X");
-  h4->SetName("Brass");
-  h4->SetTitle("Brass");
+  h4->SetName("Messing");
+  h4->SetTitle("Messing");
   h4->SetLineColor(4);
   h4->SetLineWidth(lineWidth);
 
@@ -49,14 +49,14 @@ void histoComp()
   h5->SetLineWidth(lineWidth);
 
   TH1D* h6 = getHisto("MSC_mu_0001GeV_Pb_histo.root", "Exit X");
-  h6->SetName("Lead");
-  h6->SetTitle("Lead");
+  h6->SetName("Blei");
+  h6->SetTitle("Blei");
   h6->SetLineColor(6);
   h6->SetLineWidth(lineWidth);
 
   TH1D* h7 = getHisto("MSC_mu_0001GeV_Uranium_histo.root", "Exit X");
-  h7->SetName("Uranium");
-  h7->SetTitle("Uranium");
+  h7->SetName("Uran");
+  h7->SetTitle("Uran");
   h7->SetLineColor(8);
   h7->SetLineWidth(lineWidth);
 
